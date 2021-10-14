@@ -1,38 +1,109 @@
-.App {
-  text-align: center;
+header {
+  border-bottom: 2px solid #181818;
+  height: 30px;
+  width: 100vw;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+main {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* background: rgb(190, 37, 37); */
+  width: 100vw;
+  height: calc(100vh - 64px);
 }
 
-.App-link {
-  color: #61dafb;
+.play__container {
+  height: 40px;
+  width: 60vw;
+  display: flex;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.play__container:nth-child(1) {
+  height: 40px;
+  width: 60vw;
+  border: 2px solid #181818;
+  border-bottom: none;
+}
+
+.play__container:nth-child(2) {
+  height: 40px;
+  width: 60vw;
+  border: 2px solid #181818;
+}
+.play__container:nth-child(3) {
+  height: 40px;
+  width: 60vw;
+  border: 2px solid #181818;
+  border-top: none;
+}
+
+.play__img {
+  width: 60px;
+  cursor: pointer;
+
+  margin-left: -10px;
+}
+
+footer {
+  display: flex;
+  border-top: 2px solid #181818;
+  height: 30px;
+  width: 100vw;
+
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  font-family: "Courier New", Courier, monospace;
+}
+p {
+  font-size: 12px;
+  font-weight: bold;
+  cursor: copy;
+  color: #181818;
+  margin-right: -45px;
+}
+
+p:hover {
+  color: #464646;
+}
+
+@keyframes fade {
+  0%,
+  100% {
+    opacity: 0;
   }
-  to {
-    transform: rotate(360deg);
+  30% {
+    opacity: 1;
   }
+}
+
+@keyframes fade2 {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+.copy-p__hidden {
+  opacity: 0;
+  margin-left: 45px;
+}
+.copy-p__display {
+  opacity: 0;
+  animation: fade 1s linear;
+  margin-left: 45px;
+  color: green;
+}
+
+.copy-p__display2 {
+  opacity: 0;
+  animation: fade2 1s linear;
+  margin-left: 45px;
+  color: green;
 }
