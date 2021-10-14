@@ -21,5 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/audio
-/src/audio
+/src/audio/1.mp3
+/src/audio/2.mp3
+/src/audio/3.mp3
+
