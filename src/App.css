@@ -1,7 +1,15 @@
 header {
   border-bottom: 2px solid #181818;
-  height: 30px;
+  height: 35px;
   width: 100vw;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.letter {
+  width: 20px;
+  height: 25px;
 }
 
 .gif__container {
@@ -55,7 +63,7 @@ main {
 }
 
 .play__container__p {
-  letter-spacing: 1vw;
+  letter-spacing: 0.9vw;
   font-size: 10px;
   font-weight: bold;
   color: #181818;
@@ -65,7 +73,7 @@ main {
 footer {
   display: flex;
   border-top: 2px solid #181818;
-  height: 30px;
+  height: 35px;
   width: 100vw;
 
   justify-content: center;
@@ -76,7 +84,7 @@ footer {
 p {
   font-size: 12px;
   font-weight: bold;
-  cursor: copy;
+  cursor: pointer;
   color: #181818;
   margin-right: -45px;
 }
