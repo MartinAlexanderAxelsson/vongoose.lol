@@ -7,22 +7,66 @@ header {
   align-items: center;
 }
 
-.letter {
+.letter1,
+.letter2,
+.letter3,
+.letter4,
+.letter5,
+.letter6,
+.letter7,
+.letter8 {
   width: 20px;
   height: 25px;
 }
+.letter1 {
+  animation: 8s ease-in-out 0s 100 animateOpacity;
+}
+.letter2 {
+  animation: 11s ease-in-out 0s 100 animateOpacity;
+}
+.letter3 {
+  animation: 6s ease-in-out 0s 100 animateOpacity;
+}
+.letter4 {
+  animation: 13s ease-in-out 0s 100 animateOpacity;
+}
+.letter5 {
+  animation: 3s ease-in-out 0s 100 animateOpacity;
+}
+.letter6 {
+  animation: 9s ease-in-out 0s 100 animateOpacity;
+}
+.letter7 {
+  animation: 10s ease-in-out 0s 100 animateOpacity;
+}
+.letter8 {
+  animation: 12s ease-in-out 0s 1 animateOpacity;
+}
+.letter1:hover,
+.letter2:hover,
+.letter3:hover,
+.letter4:hover,
+.letter5:hover,
+.letter6:hover,
+.letter7:hover,
+.letter8:hover {
+  animation: 1s ease-in-out 0s 100 animateOpacity;
+}
+
+/* ________________________________ */
 
 .gif__container {
   display: flex;
   justify-content: center;
   width: 100vw;
   background: rgb(216, 216, 216);
-  margin-bottom: -100px;
+  margin-bottom: -80px;
 }
 
 .gif__img {
+  /* transform: scaleX(-1); */
+  margin-top: -20px;
   width: 400px;
-
   opacity: 0.8;
 }
 
@@ -33,12 +77,13 @@ main {
   justify-content: center;
   background: rgb(216, 216, 216);
   width: 100vw;
-  height: calc(100vh - 264px);
+  height: calc(100vh - 274px);
 }
 
 .play__container {
   height: 40px;
-  width: 700px;
+  width: 90vw;
+  max-width: 700px;
   display: flex;
   align-items: center;
 }
@@ -63,11 +108,17 @@ main {
 }
 
 .play__container__p {
-  letter-spacing: 0.9vw;
+  letter-spacing: 10px;
   font-size: 10px;
   font-weight: bold;
   color: #181818;
   z-index: 100;
+}
+
+@media (max-width: 615px) {
+  .play__container__p {
+    letter-spacing: 0.6vw;
+  }
 }
 
 footer {
@@ -86,11 +137,20 @@ p {
   font-weight: bold;
   cursor: pointer;
   color: #181818;
-  margin-right: -45px;
+  margin-right: -55px;
 }
 
 p:hover {
   color: #464646;
+}
+
+@keyframes animateOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
 }
 
 @keyframes fade {
@@ -115,18 +175,26 @@ p:hover {
 
 .copy-p__hidden {
   opacity: 0;
-  margin-left: 45px;
+  margin-left: 55px;
 }
 .copy-p__display {
   opacity: 0;
   animation: fade 1s linear;
-  margin-left: 45px;
+  margin-left: 55px;
   color: green;
 }
 
 .copy-p__display2 {
   opacity: 0;
   animation: fade2 1s linear;
-  margin-left: 45px;
+  margin-left: 55px;
   color: green;
+}
+
+.volume__slider {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  width: 200px;
 }

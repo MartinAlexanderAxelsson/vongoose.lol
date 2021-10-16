@@ -1,23 +1,25 @@
-import react, { useState, useRef, createRef, useEffect } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-// import gif from "./images/tape.gif";
-// import gifStill from "./images/tapeStill.png";
-import playIcon from "./images/play1.png";
-import pauseIcon from "./images/pause.png";
-import AWSIAWB from "./audio/1.mp3";
-import THPIC from "./audio/2.mp3";
-import OAG from "./audio/3.mp3";
-import SliderUnstyled from "@mui/core/SliderUnstyled";
-import { styled, alpha, Box } from "@mui/system";
-import v from "./images/v.png";
-import o1 from "./images/o1.png";
-import n from "./images/n.png";
-import g from "./images/g.png";
-import o2 from "./images/o2.png";
-import o3 from "./images/o3.png";
-import s from "./images/s.png";
-import e from "./images/e.png";
+import react, { useState, useRef, createRef, useEffect } from "react"
+import "./App.css"
+import gif from "./images/tape.gif"
+import gifStill from "./images/tapeStill.png"
+import gifSpeed from "./images/tapeSpeed.gif"
+import playIcon from "./images/play1.png"
+import pauseIcon from "./images/pause.png"
+import AWSIAWB from "./audio/1.mp3"
+import THPIC from "./audio/2.mp3"
+import OAG from "./audio/3.mp3"
+import SliderUnstyled from "@mui/core/SliderUnstyled"
+import { styled, alpha } from "@mui/system"
+import v from "./images/v.png"
+import o1 from "./images/o1.png"
+import n from "./images/n.png"
+import g from "./images/g.png"
+import o2 from "./images/o2.png"
+import o3 from "./images/o3.png"
+import s from "./images/s.png"
+import e from "./images/e.png"
+import VolumeUpIcon from "@mui/icons-material/VolumeUp"
+import VolumeOffIcon from "@mui/icons-material/VolumeOff"
 
 const StyledSlider = styled(SliderUnstyled)(
   ({ theme }) => `
@@ -43,6 +45,9 @@ const StyledSlider = styled(SliderUnstyled)(
       border-radius: 2px;
       background-color: currentColor;
       opacity: 0.38;
+      @media (max-width: 600px) {
+        width: 96%;
+      }
     }
   
     & .MuiSlider-track {
@@ -78,16 +83,88 @@ const StyledSlider = styled(SliderUnstyled)(
           theme.palette.mode === "light" ? "#888888" : "#f1f1f1",
           0.3
         )};
+        }
       }
     }
   `
-);
+)
+
+const StyledSlider__2 = styled(SliderUnstyled)(
+  ({ theme }) => `
+      color: ${
+        theme.palette.mode === "light"
+          ? "rgb(170, 170, 170)"
+          : "rgb(170, 170, 170)"
+      };
+      height: 4px;
+      width: 90%;
+      padding: 13px 0;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      touch-action: none;
+      -webkit-tap-highlight-color: transparent;
+      opacity: 0.75;
+      &:hover {
+        opacity: 1;
+      }
+    
+      & .MuiSlider-rail {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        border-radius: 2px;
+        background-color: rgb(150, 150, 150);
+        opacity: 0.38;
+      }
+    
+      & .MuiSlider-track {
+        display: block;
+        position: absolute;
+        height: 3px;
+        border-radius: 2px;
+        background-color: rgb(150, 150, 150);
+      }
+    
+      & .MuiSlider-thumb {
+        position: absolute;
+        width: 6px;
+        height: 3px;
+        margin-left: -6px;
+        margin-top: 0px;
+        box-sizing: border-box;
+        border-radius: 20%;
+        outline: 0;
+        border: none;
+        background-color: none;
+    
+        :hover,
+        &.Mui-focusVisible {
+          box-shadow: 0 0 0 0.25rem ${alpha(
+            theme.palette.mode === "light" ? "#ffffff00" : "#ffffff00",
+            0
+          )};
+        }
+    
+        &.Mui-active {
+          box-shadow: 0 0 0 0.25rem ${alpha(
+            theme.palette.mode === "light" ? "#ffffff00" : "#ffffff00",
+            0
+          )};
+        }
+      }
+    `
+)
 
 function App() {
-  const audioPlayer = useRef([createRef(), createRef(), createRef()]);
+  const audioPlayer = useRef([createRef(), createRef(), createRef()])
+  const [mute, setMute] = useState(false)
+  const [volume, setVolume] = useState(0.5)
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const intervalRef = useRef();
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [scrub, setScrub] = useState(false)
+  const intervalRef = useRef()
   const [playObj, setPlayObj] = useState([
     {
       id: 0,
@@ -113,92 +190,112 @@ function App() {
       duration: 330.1389,
       title: "O a G",
     },
-  ]);
-  const [copied, setCopied] = useState("copy-p__hidden");
-  const [progress, setProgress] = useState(0);
+  ])
+  const [copied, setCopied] = useState("copy-p__hidden")
+  const [progress, setProgress] = useState(0)
 
-  const startTimer = e => {
-    const play = e.target.id;
+  const startTimer = (e) => {
+    const play = e.target.id
 
-    clearInterval(intervalRef.current);
+    clearInterval(intervalRef.current)
 
     intervalRef.current = setInterval(() => {
       if (audioPlayer.current[play].current.ended) {
-        console.log("end");
+        console.log("end")
       } else {
-        setProgress(audioPlayer.current[play].current.currentTime);
+        setProgress(audioPlayer.current[play].current.currentTime)
       }
-    }, [200]);
-  };
+    }, [200])
+  }
 
-  const slider = useRef();
+  const slider = useRef()
 
-  const onScrub = value => {
-    const play = slider.current.id;
+  const onScrub = (value) => {
+    setScrub(true)
+    const play = slider.current.id
 
-    clearInterval(intervalRef.current);
-    audioPlayer.current[play].current.currentTime = value;
-    setProgress(audioPlayer.current[play].current.currentTime);
-  };
+    clearInterval(intervalRef.current)
+    audioPlayer.current[play].current.currentTime = value
+    setProgress(audioPlayer.current[play].current.currentTime)
+  }
 
   const playAudio = (e, x) => {
-    const play = e.target.id;
-    startTimer(e);
+    const play = e.target.id
+
+    startTimer(e)
 
     const filterNotPlaying = playObj.filter((x, index, arr) => {
-      return x.id != play;
-    });
+      return x.id != play
+    })
     const notPlaying = filterNotPlaying.map((k, v) => {
-      return k.id;
-    });
-    setIsPlaying(true);
-    const updatedPlayObj = [...playObj];
-    updatedPlayObj[play].play = true;
-    updatedPlayObj[notPlaying[0]].play = false;
-    updatedPlayObj[notPlaying[1]].play = false;
-    setPlayObj(updatedPlayObj);
+      return k.id
+    })
+    setIsPlaying(true)
+    const updatedPlayObj = [...playObj]
+    updatedPlayObj[play].play = true
+    updatedPlayObj[notPlaying[0]].play = false
+    updatedPlayObj[notPlaying[1]].play = false
+    setPlayObj(updatedPlayObj)
 
-    audioPlayer.current[play].current.play();
-    audioPlayer.current[notPlaying[0]].current.pause();
-    audioPlayer.current[notPlaying[1]].current.pause();
-  };
+    audioPlayer.current[play].current.play()
+    audioPlayer.current[notPlaying[0]].current.pause()
+    audioPlayer.current[notPlaying[1]].current.pause()
+  }
 
-  const stopAudio = e => {
-    const pause = e.target.id;
-    clearInterval(intervalRef.current);
-    setIsPlaying(false);
-    const updatedPlayObj = [...playObj];
-    updatedPlayObj[pause].play = false;
+  const stopAudio = (e) => {
+    const pause = e.target.id
+    clearInterval(intervalRef.current)
+    setIsPlaying(false)
+    const updatedPlayObj = [...playObj]
+    updatedPlayObj[pause].play = false
 
-    setPlayObj(updatedPlayObj);
-    audioPlayer.current[pause].current.pause();
-  };
+    setPlayObj(updatedPlayObj)
+    audioPlayer.current[pause].current.pause()
+  }
 
-  const [paused, setPaused] = useState(false);
-  // console.log(progress);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    audioPlayer.current[0].current.volume = volume
+    audioPlayer.current[1].current.volume = volume
+    audioPlayer.current[2].current.volume = volume
+  }, [volume])
 
   //favicon cassettetape
 
   return (
     <>
       <header>
-        <img className="letter" src={v} />
-        <img className="letter" src={o1} />
-        <img className="letter" src={n} />
-        <img className="letter" src={g} />
-        <img className="letter" src={o2} />
-        <img className="letter" src={o3} />
-        <img className="letter" src={s} />
-        <img className="letter" src={e} />
+        <a href="https://open.spotify.com/artist/7JpC0dmw0M65MmhL4PYEhh">
+          <img className="letter1" src={v} />
+        </a>
+        <a href="https://www.youtube.com/watch?v=dn1GYQwSBog">
+          <img className="letter2" src={o1} />
+        </a>
+        <a href="https://soundcloud.com/von_goose">
+          <img className="letter3" src={n} />
+        </a>
+        <a href="https://www.youtube.com/channel/UCXxwh2DZVGyaw0OgdryEFwg">
+          <img className="letter4" src={g} />
+        </a>
+        <a href="https://github.com/MartinAlexanderAxelsson">
+          <img className="letter5" src={o2} />
+        </a>
+        <a href="https://von-goose.com/scriptwave">
+          <img className="letter6" src={o3} />
+        </a>
+        <a href="https://von-goose.com/scriptbeat">
+          <img className="letter7" src={s} />
+        </a>
+        <a href="https://von-goose.com/static">
+          <img className="letter8" src={e} />
+        </a>
       </header>
-      {/* <div className="gif__container">
+      <div className="gif__container">
         {isPlaying ? (
-          <img className="gif__img" src={gif} />
+          <img className="gif__img" src={scrub ? gifSpeed : gif} />
         ) : (
           <img className="gif__img" src={gifStill} />
         )}
-      </div> */}
+      </div>
 
       <main>
         {playObj &&
@@ -221,6 +318,7 @@ function App() {
                   />
                 )}
                 <audio
+                  muted={mute}
                   id={obj.id}
                   ref={audioPlayer.current[obj.id]}
                   type="audio/wav"
@@ -239,12 +337,44 @@ function App() {
                     step={1}
                     max={obj.duration}
                     aria-labelledby="continuous-slider"
-                    onChange={e => onScrub(e.target.value)}
+                    onChange={(e) => onScrub(e.target.value)}
+                    onMouseUp={() => setScrub(false)}
+                    onTouchEnd={() => setScrub(false)}
                   />
                 )}
               </div>
-            );
+            )
           })}
+        <div className="volume__slider">
+          {!mute ? (
+            <VolumeUpIcon
+              sx={{
+                color: "rgb(165, 165, 165)",
+                marginRight: "10px",
+                cursor: "pointer",
+              }}
+              onClick={() => setMute(mute ? false : true)}
+            />
+          ) : (
+            <VolumeOffIcon
+              sx={{
+                color: "rgb(165, 165, 165)",
+                marginRight: "10px",
+                cursor: "pointer",
+              }}
+              onClick={() => setMute(mute ? false : true)}
+            />
+          )}
+          <StyledSlider__2
+            defaultValue={0.5}
+            value={volume}
+            min={0}
+            step={0.01}
+            max={1}
+            aria-labelledby="continuous-slider"
+            onChange={(e) => setVolume(e.target.value)}
+          />
+        </div>
       </main>
 
       <footer>
@@ -254,8 +384,8 @@ function App() {
               copied == "copy-p__display"
                 ? "copy-p__display2"
                 : "copy-p__display"
-            );
-            navigator.clipboard.writeText("von.goose@protonmail.com");
+            )
+            navigator.clipboard.writeText("von.goose@protonmail.com")
           }}
         >
           von.goose@protonmail.com
@@ -263,7 +393,7 @@ function App() {
         <p className={copied}>&nbsp;Copied!</p>
       </footer>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -26,4 +26,5 @@ yarn-error.log*
 /src/audio/3.mp3
 /src/images/tape.gif
 /src/images/tapeStill.png
+/src/images/tapeSpeed.gif
 
