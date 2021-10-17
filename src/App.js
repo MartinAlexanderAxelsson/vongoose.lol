@@ -14,17 +14,6 @@ import s from "./images/s.png"
 import e from "./images/e.png"
 import VolumeUpIcon from "@mui/icons-material/VolumeUp"
 import VolumeOffIcon from "@mui/icons-material/VolumeOff"
-import app from "./firebaseConfig"
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore"
-
-const db = getFirestore(app)
-const qry = query(collection(db, "assets"))
 
 const StyledSlider = styled(SliderUnstyled)(
   ({ theme }) => `

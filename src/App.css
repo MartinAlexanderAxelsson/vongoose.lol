@@ -113,6 +113,7 @@ main {
   font-weight: bold;
   color: #181818;
   z-index: 100;
+  font-family: monospace;
 }
 
 @media (max-width: 615px) {
@@ -130,14 +131,15 @@ footer {
   justify-content: center;
   justify-items: center;
   align-items: center;
-  font-family: "Courier New", Courier, monospace;
+  /* font-family: "Courier New", Courier, monospace; */
 }
 p {
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 900;
   cursor: pointer;
   color: #181818;
   margin-right: -55px;
+  font-family: monospace;
 }
 
 p:hover {
