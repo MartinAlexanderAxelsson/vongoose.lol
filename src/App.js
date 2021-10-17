@@ -1,13 +1,7 @@
 import react, { useState, useRef, createRef, useEffect } from "react"
 import "./App.css"
-import gif from "./images/tape.gif"
-import gifStill from "./images/tapeStill.png"
-import gifSpeed from "./images/tapeSpeed.gif"
 import playIcon from "./images/play1.png"
 import pauseIcon from "./images/pause.png"
-import AWSIAWB from "./audio/1.mp3"
-import THPIC from "./audio/2.mp3"
-import OAG from "./audio/3.mp3"
 import SliderUnstyled from "@mui/core/SliderUnstyled"
 import { styled, alpha } from "@mui/system"
 import v from "./images/v.png"
@@ -20,6 +14,17 @@ import s from "./images/s.png"
 import e from "./images/e.png"
 import VolumeUpIcon from "@mui/icons-material/VolumeUp"
 import VolumeOffIcon from "@mui/icons-material/VolumeOff"
+import app from "./firebaseConfig"
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore"
+
+const db = getFirestore(app)
+const qry = query(collection(db, "assets"))
 
 const StyledSlider = styled(SliderUnstyled)(
   ({ theme }) => `
@@ -161,44 +166,46 @@ function App() {
   const audioPlayer = useRef([createRef(), createRef(), createRef()])
   const [mute, setMute] = useState(false)
   const [volume, setVolume] = useState(0.5)
-
+  const tapeImg = process.env.REACT_APP_IMG_1
+  const tapeGif = process.env.REACT_APP_GIF_1
+  const tapeGifFast = process.env.REACT_APP_GIF_2
   const [isPlaying, setIsPlaying] = useState(false)
   const [scrub, setScrub] = useState(false)
   const intervalRef = useRef()
+  const slider = useRef()
+  const [copied, setCopied] = useState("copy-p__hidden")
+  const [progress, setProgress] = useState(0)
+
   const [playObj, setPlayObj] = useState([
     {
       id: 0,
       play: false,
       icon: playIcon,
-      song: AWSIAWB,
-      duration: 238.293,
+      song: process.env.REACT_APP_AUDIO_1,
+      duration: 239.967755,
       title: "Always Was Still Is Always Will Be",
     },
     {
       id: 1,
       play: false,
       icon: playIcon,
-      song: THPIC,
-      duration: 303.5169,
+      song: process.env.REACT_APP_AUDIO_2,
+      duration: 306.350363,
       title: "The Hard Part Is Coming",
     },
     {
       id: 2,
       play: false,
       icon: playIcon,
-      song: OAG,
-      duration: 330.1389,
+      song: process.env.REACT_APP_AUDIO_3,
+      duration: 329.092948,
       title: "O a G",
     },
   ])
-  const [copied, setCopied] = useState("copy-p__hidden")
-  const [progress, setProgress] = useState(0)
 
   const startTimer = (e) => {
     const play = e.target.id
-
     clearInterval(intervalRef.current)
-
     intervalRef.current = setInterval(() => {
       if (audioPlayer.current[play].current.ended) {
         console.log("end")
@@ -208,13 +215,10 @@ function App() {
     }, [200])
   }
 
-  const slider = useRef()
-
   const onScrub = (value) => {
     setScrub(true)
     const play = slider.current.id
-
-    clearInterval(intervalRef.current)
+    // clearInterval(intervalRef.current)
     audioPlayer.current[play].current.currentTime = value
     setProgress(audioPlayer.current[play].current.currentTime)
   }
@@ -224,13 +228,15 @@ function App() {
 
     startTimer(e)
 
-    const filterNotPlaying = playObj.filter((x, index, arr) => {
+    const filterNotPlaying = playObj.filter((x) => {
       return x.id != play
     })
-    const notPlaying = filterNotPlaying.map((k, v) => {
+    const notPlaying = filterNotPlaying.map((k) => {
       return k.id
     })
+
     setIsPlaying(true)
+
     const updatedPlayObj = [...playObj]
     updatedPlayObj[play].play = true
     updatedPlayObj[notPlaying[0]].play = false
@@ -244,12 +250,15 @@ function App() {
 
   const stopAudio = (e) => {
     const pause = e.target.id
+
     clearInterval(intervalRef.current)
+
     setIsPlaying(false)
+
     const updatedPlayObj = [...playObj]
     updatedPlayObj[pause].play = false
-
     setPlayObj(updatedPlayObj)
+
     audioPlayer.current[pause].current.pause()
   }
 
@@ -259,7 +268,17 @@ function App() {
     audioPlayer.current[2].current.volume = volume
   }, [volume])
 
-  //favicon cassettetape
+  //   useEffect(() => {
+  //     const getData = async () => {
+  //       const fetch = await getDocs(qry)
+  //       fetch.forEach((doc) => {
+  //         setData(doc.data())
+  //         console.log(doc.data())
+  //       })
+  //     }
+
+  //     getData()
+  //   }, [])
 
   return (
     <>
@@ -291,60 +310,62 @@ function App() {
       </header>
       <div className="gif__container">
         {isPlaying ? (
-          <img className="gif__img" src={scrub ? gifSpeed : gif} />
+          <img className="gif__img" src={scrub ? tapeGifFast : tapeGif} />
         ) : (
-          <img className="gif__img" src={gifStill} />
+          <img className="gif__img" src={tapeImg} />
         )}
       </div>
 
       <main>
-        {playObj &&
-          playObj.map((obj, i) => {
-            return (
-              <div key={i} className="play__container">
-                {!obj.play ? (
-                  <img
-                    id={obj.id}
-                    onClick={playAudio}
-                    className="play__img"
-                    src={playIcon}
-                  />
-                ) : (
-                  <img
-                    id={obj.id}
-                    onClick={stopAudio}
-                    className="play__img"
-                    src={pauseIcon}
-                  />
-                )}
-                <audio
-                  muted={mute}
+        {playObj.map((obj, i) => {
+          return (
+            <div key={i} className="play__container">
+              {!obj.play ? (
+                <img
                   id={obj.id}
-                  ref={audioPlayer.current[obj.id]}
-                  type="audio/wav"
-                  src={obj.song}
-                  draggable
-                ></audio>
-                {!obj.play ? (
-                  <p className="play__container__p">{obj.title}</p>
-                ) : (
-                  <StyledSlider
-                    ref={slider}
-                    id={obj.id}
-                    defaultValue={0}
-                    value={progress}
-                    min={0}
-                    step={1}
-                    max={obj.duration}
-                    aria-labelledby="continuous-slider"
-                    onChange={(e) => onScrub(e.target.value)}
-                    onMouseUp={() => setScrub(false)}
-                    onTouchEnd={() => setScrub(false)}
-                  />
-                )}
-              </div>
-            )
-          })}
+                  onClick={playAudio}
+                  className="play__img"
+                  src={playIcon}
+                />
+              ) : (
+                <img
+                  id={obj.id}
+                  onClick={stopAudio}
+                  className="play__img"
+                  src={pauseIcon}
+                />
+              )}
+
+              <audio
+                muted={mute}
+                id={obj.id}
+                ref={audioPlayer.current[obj.id]}
+                type="audio/wav"
+                src={obj.song}
+                draggable
+                loop
+              ></audio>
+
+              {!obj.play ? (
+                <p className="play__container__p">{obj.title}</p>
+              ) : (
+                <StyledSlider
+                  ref={slider}
+                  id={obj.id}
+                  defaultValue={0}
+                  value={progress}
+                  min={0}
+                  step={1}
+                  max={obj.duration}
+                  aria-labelledby="continuous-slider"
+                  onChange={(e) => onScrub(e.target.value)}
+                  onMouseUp={() => setScrub(false)}
+                  onTouchEnd={() => setScrub(false)}
+                />
+              )}
+            </div>
+          )
+        })}
         <div className="volume__slider">
           {!mute ? (
             <VolumeUpIcon
