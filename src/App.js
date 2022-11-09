@@ -143,6 +143,7 @@ function App() {
   const tapeGif = process.env.REACT_APP_GIF_1;
   const tapeGifFast = process.env.REACT_APP_GIF_2;
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [scrub, setScrub] = useState(false);
   const intervalRef = useRef();
   const slider = useRef();
@@ -275,16 +276,16 @@ function App() {
             &#60;------Go to von-goose.com
           </a>
         </div>
+
         <div className="gif__container">
-          {tapeImg ? (
-            <div>
-              {isPlaying ? (
-                <img className="gif__img" src={scrub ? tapeGifFast : tapeGif} />
-              ) : (
-                <img className="gif__img" src={tapeImg} />
-              )}
-            </div>
-          ) : (
+          <div>
+            {isPlaying ? (
+              <img className="gif__img" src={scrub ? tapeGifFast : tapeGif} />
+            ) : (
+              <img className="gif__img" src={tapeImg} onLoad={() => setIsLoading(false)} />
+            )}
+          </div>
+          {isLoading && (
             <div className="gif-loading">
               <span className="videoLoading-animation"></span>
             </div>
