@@ -1,6 +1,37 @@
+.videoLoading-animation:before {
+  animation: videoLoading 2s linear infinite;
+  content: "";
+}
+
+@keyframes videoLoading {
+  0% {
+    content: "/";
+  }
+  20% {
+    content: "//";
+  }
+  40% {
+    content: "///";
+  }
+  60% {
+    content: "////";
+  }
+  80% {
+    content: "/////";
+  }
+  100% {
+    content: "//////";
+  }
+}
+
+.main-container {
+  height: 100vh;
+  width: 100vw;
+}
+
 header {
   border-bottom: 2px solid #181818;
-  height: 35px;
+  height: 40px;
   width: 100vw;
   display: flex;
   justify-content: space-evenly;
@@ -58,35 +89,48 @@ header {
 .gif__container {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100vw;
+  height: 50vh;
   background: rgb(216, 216, 216);
-  margin-bottom: -80px;
-}
-@media (max-width: 615px) {
-  .gif__container {
-    margin-bottom: -100px;
-  }
+  /* margin-bottom: -80px; */
 }
 
 .gif__img {
   /* transform: scaleX(-1); */
-  margin-top: -20px;
-  width: 400px;
+  margin-top: 4vh;
+  height: 50vh;
   opacity: 0.8;
+}
+
+@media (max-width: 615px) {
+  .gif__container {
+    /* margin-bottom: -100px; */
+  }
+  .gif__img {
+    margin-top: 4vh;
+    height: 40vh;
+    opacity: 0.8;
+  }
+}
+
+.gif-loading {
+  /* height: 20vh; */
 }
 
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background: rgb(216, 216, 216);
   width: 100vw;
-  height: calc(100vh - 274px);
+  height: calc(50vh - 135px);
+  /* padding-top: 6vh; */
 }
 @media (max-width: 615px) {
   main {
-    height: calc(100vh - 234px);
+    height: calc(50vh - 85px);
   }
 }
 
@@ -135,7 +179,7 @@ main {
 footer {
   display: flex;
   border-top: 2px solid #181818;
-  height: 35px;
+  height: 40px;
   width: 100vw;
 
   justify-content: center;
@@ -210,4 +254,23 @@ p:hover {
   align-items: center;
   margin-top: 20px;
   width: 200px;
+}
+
+.toVonGoose {
+  background: rgb(216, 216, 216);
+  letter-spacing: 0.5px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+
+  font-family: monospace;
+  padding: 5px 0px 5px 5px;
+}
+
+.toVonGoose__a {
+  color: #181818;
+  text-decoration: none;
+}
+.toVonGoose__a:hover {
+  color: blue;
 }

@@ -1,19 +1,19 @@
-import react, { useState, useRef, createRef, useEffect } from "react"
-import "./App.css"
-import playIcon from "./images/play1.png"
-import pauseIcon from "./images/pause.png"
-import SliderUnstyled from "@mui/core/SliderUnstyled"
-import { styled, alpha } from "@mui/system"
-import v from "./images/v.png"
-import o1 from "./images/o1.png"
-import n from "./images/n.png"
-import g from "./images/g.png"
-import o2 from "./images/o2.png"
-import o3 from "./images/o3.png"
-import s from "./images/s.png"
-import e from "./images/e.png"
-import VolumeUpIcon from "@mui/icons-material/VolumeUp"
-import VolumeOffIcon from "@mui/icons-material/VolumeOff"
+import react, { useState, useRef, createRef, useEffect } from "react";
+import "./App.css";
+import playIcon from "./images/play1.png";
+import pauseIcon from "./images/pause.png";
+import SliderUnstyled from "@mui/core/SliderUnstyled";
+import { styled, alpha } from "@mui/system";
+import v from "./images/v.png";
+import o1 from "./images/o1.png";
+import n from "./images/n.png";
+import g from "./images/g.png";
+import o2 from "./images/o2.png";
+import o3 from "./images/o3.png";
+import s from "./images/s.png";
+import e from "./images/e.png";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 
 const StyledSlider = styled(SliderUnstyled)(
   ({ theme }) => `
@@ -66,30 +66,20 @@ const StyledSlider = styled(SliderUnstyled)(
   
       :hover,
       &.Mui-focusVisible {
-        box-shadow: 0 0 0 0.25rem ${alpha(
-          theme.palette.mode === "light" ? "#888888" : "#f1f1f1",
-          0.15
-        )};
+        box-shadow: 0 0 0 0.25rem ${alpha(theme.palette.mode === "light" ? "#888888" : "#f1f1f1", 0.15)};
       }
   
       &.Mui-active {
-        box-shadow: 0 0 0 0.25rem ${alpha(
-          theme.palette.mode === "light" ? "#888888" : "#f1f1f1",
-          0.3
-        )};
+        box-shadow: 0 0 0 0.25rem ${alpha(theme.palette.mode === "light" ? "#888888" : "#f1f1f1", 0.3)};
         }
       }
     }
   `
-)
+);
 
 const StyledSlider__2 = styled(SliderUnstyled)(
   ({ theme }) => `
-      color: ${
-        theme.palette.mode === "light"
-          ? "rgb(170, 170, 170)"
-          : "rgb(170, 170, 170)"
-      };
+      color: ${theme.palette.mode === "light" ? "rgb(170, 170, 170)" : "rgb(170, 170, 170)"};
       height: 4px;
       width: 90%;
       padding: 13px 0;
@@ -135,35 +125,29 @@ const StyledSlider__2 = styled(SliderUnstyled)(
     
         :hover,
         &.Mui-focusVisible {
-          box-shadow: 0 0 0 0.25rem ${alpha(
-            theme.palette.mode === "light" ? "#ffffff00" : "#ffffff00",
-            0
-          )};
+          box-shadow: 0 0 0 0.25rem ${alpha(theme.palette.mode === "light" ? "#ffffff00" : "#ffffff00", 0)};
         }
     
         &.Mui-active {
-          box-shadow: 0 0 0 0.25rem ${alpha(
-            theme.palette.mode === "light" ? "#ffffff00" : "#ffffff00",
-            0
-          )};
+          box-shadow: 0 0 0 0.25rem ${alpha(theme.palette.mode === "light" ? "#ffffff00" : "#ffffff00", 0)};
         }
       }
     `
-)
+);
 
 function App() {
-  const audioPlayer = useRef([createRef(), createRef(), createRef()])
-  const [mute, setMute] = useState(false)
-  const [volume, setVolume] = useState(0.5)
-  const tapeImg = process.env.REACT_APP_IMG_1
-  const tapeGif = process.env.REACT_APP_GIF_1
-  const tapeGifFast = process.env.REACT_APP_GIF_2
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [scrub, setScrub] = useState(false)
-  const intervalRef = useRef()
-  const slider = useRef()
-  const [copied, setCopied] = useState("copy-p__hidden")
-  const [progress, setProgress] = useState(0)
+  const audioPlayer = useRef([createRef(), createRef(), createRef()]);
+  const [mute, setMute] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const tapeImg = process.env.REACT_APP_IMG_1;
+  const tapeGif = process.env.REACT_APP_GIF_1;
+  const tapeGifFast = process.env.REACT_APP_GIF_2;
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [scrub, setScrub] = useState(false);
+  const intervalRef = useRef();
+  const slider = useRef();
+  const [copied, setCopied] = useState("copy-p__hidden");
+  const [progress, setProgress] = useState(0);
 
   const [playObj, setPlayObj] = useState([
     {
@@ -190,220 +174,213 @@ function App() {
       duration: 329.092948,
       title: "O a G",
     },
-  ])
+  ]);
 
-  const startTimer = (e) => {
-    const play = e.target.id
-    clearInterval(intervalRef.current)
+  const startTimer = e => {
+    const play = e.target.id;
+    clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       if (audioPlayer.current[play].current.ended) {
-        console.log("end")
+        console.log("end");
       } else {
-        setProgress(audioPlayer.current[play].current.currentTime)
+        setProgress(audioPlayer.current[play].current.currentTime);
       }
-    }, [200])
-  }
+    }, [200]);
+  };
 
-  const onScrub = (value) => {
-    setScrub(true)
-    const play = slider.current.id
+  const onScrub = value => {
+    setScrub(true);
+    const play = slider.current.id;
     // clearInterval(intervalRef.current)
-    audioPlayer.current[play].current.currentTime = value
-    setProgress(audioPlayer.current[play].current.currentTime)
-  }
+    audioPlayer.current[play].current.currentTime = value;
+    setProgress(audioPlayer.current[play].current.currentTime);
+  };
 
   const playAudio = (e, x) => {
-    const play = e.target.id
+    const play = e.target.id;
 
-    startTimer(e)
+    startTimer(e);
 
-    const filterNotPlaying = playObj.filter((x) => {
-      return x.id != play
-    })
-    const notPlaying = filterNotPlaying.map((k) => {
-      return k.id
-    })
+    const filterNotPlaying = playObj.filter(x => {
+      return x.id != play;
+    });
+    const notPlaying = filterNotPlaying.map(k => {
+      return k.id;
+    });
 
-    setIsPlaying(true)
+    setIsPlaying(true);
 
-    const updatedPlayObj = [...playObj]
-    updatedPlayObj[play].play = true
-    updatedPlayObj[notPlaying[0]].play = false
-    updatedPlayObj[notPlaying[1]].play = false
-    setPlayObj(updatedPlayObj)
+    const updatedPlayObj = [...playObj];
+    updatedPlayObj[play].play = true;
+    updatedPlayObj[notPlaying[0]].play = false;
+    updatedPlayObj[notPlaying[1]].play = false;
+    setPlayObj(updatedPlayObj);
 
-    audioPlayer.current[play].current.play()
-    audioPlayer.current[notPlaying[0]].current.pause()
-    audioPlayer.current[notPlaying[1]].current.pause()
-  }
+    audioPlayer.current[play].current.play();
+    audioPlayer.current[notPlaying[0]].current.pause();
+    audioPlayer.current[notPlaying[1]].current.pause();
+  };
 
-  const stopAudio = (e) => {
-    const pause = e.target.id
+  const stopAudio = e => {
+    const pause = e.target.id;
 
-    clearInterval(intervalRef.current)
+    clearInterval(intervalRef.current);
 
-    setIsPlaying(false)
+    setIsPlaying(false);
 
-    const updatedPlayObj = [...playObj]
-    updatedPlayObj[pause].play = false
-    setPlayObj(updatedPlayObj)
+    const updatedPlayObj = [...playObj];
+    updatedPlayObj[pause].play = false;
+    setPlayObj(updatedPlayObj);
 
-    audioPlayer.current[pause].current.pause()
-  }
+    audioPlayer.current[pause].current.pause();
+  };
 
   useEffect(() => {
-    audioPlayer.current[0].current.volume = volume
-    audioPlayer.current[1].current.volume = volume
-    audioPlayer.current[2].current.volume = volume
-  }, [volume])
-
-  //   useEffect(() => {
-  //     const getData = async () => {
-  //       const fetch = await getDocs(qry)
-  //       fetch.forEach((doc) => {
-  //         setData(doc.data())
-  //         console.log(doc.data())
-  //       })
-  //     }
-
-  //     getData()
-  //   }, [])
+    audioPlayer.current[0].current.volume = volume;
+    audioPlayer.current[1].current.volume = volume;
+    audioPlayer.current[2].current.volume = volume;
+  }, [volume]);
 
   return (
     <>
-      <header>
-        <a href="https://open.spotify.com/artist/7JpC0dmw0M65MmhL4PYEhh">
-          <img className="letter1" src={v} />
-        </a>
-        <a href="https://www.youtube.com/watch?v=dn1GYQwSBog">
-          <img className="letter2" src={o1} />
-        </a>
-        <a href="https://soundcloud.com/von_goose">
-          <img className="letter3" src={n} />
-        </a>
-        <a href="https://www.youtube.com/channel/UCXxwh2DZVGyaw0OgdryEFwg">
-          <img className="letter4" src={g} />
-        </a>
-        <a href="https://github.com/MartinAlexanderAxelsson">
-          <img className="letter5" src={o2} />
-        </a>
-        <a href="https://von-goose.com/scriptwave">
-          <img className="letter6" src={o3} />
-        </a>
-        <a href="https://von-goose.com/scriptbeat">
-          <img className="letter7" src={s} />
-        </a>
-        <a href="https://von-goose.com/static">
-          <img className="letter8" src={e} />
-        </a>
-      </header>
-      <div className="gif__container">
-        {isPlaying ? (
-          <img className="gif__img" src={scrub ? tapeGifFast : tapeGif} />
-        ) : (
-          <img className="gif__img" src={tapeImg} />
-        )}
-      </div>
-
-      <main>
-        {playObj.map((obj, i) => {
-          return (
-            <div key={i} className="play__container">
-              {!obj.play ? (
-                <img
-                  id={obj.id}
-                  onClick={playAudio}
-                  className="play__img"
-                  src={playIcon}
-                />
+      <section className="main-container">
+        <header>
+          <a href="https://open.spotify.com/artist/7JpC0dmw0M65MmhL4PYEhh">
+            <img className="letter1" src={v} />
+          </a>
+          <a href="https://www.youtube.com/watch?v=dn1GYQwSBog">
+            <img className="letter2" src={o1} />
+          </a>
+          <a href="https://soundcloud.com/von_goose">
+            <img className="letter3" src={n} />
+          </a>
+          <a href="https://www.youtube.com/channel/UCXxwh2DZVGyaw0OgdryEFwg">
+            <img className="letter4" src={g} />
+          </a>
+          <a href="https://github.com/MartinAlexanderAxelsson">
+            <img className="letter5" src={o2} />
+          </a>
+          <a href="https://www.scriptwave.von-goose.com">
+            <img className="letter6" src={o3} />
+          </a>
+          <a href="https://www.scriptbeat.von-goose.com">
+            <img className="letter7" src={s} />
+          </a>
+          <a href="https://von-goose.com/static">
+            <img className="letter8" src={e} />
+          </a>
+        </header>
+        <div className="toVonGoose">
+          <a className="toVonGoose__a" href="https://www.von-goose.com">
+            &#60;------Go to von-goose.com
+          </a>
+        </div>
+        <div className="gif__container">
+          {tapeImg ? (
+            <div>
+              {isPlaying ? (
+                <img className="gif__img" src={scrub ? tapeGifFast : tapeGif} />
               ) : (
-                <img
-                  id={obj.id}
-                  onClick={stopAudio}
-                  className="play__img"
-                  src={pauseIcon}
-                />
-              )}
-
-              <audio
-                muted={mute}
-                id={obj.id}
-                ref={audioPlayer.current[obj.id]}
-                type="audio/wav"
-                src={obj.song}
-                draggable
-                loop
-              ></audio>
-
-              {!obj.play ? (
-                <p className="play__container__p">{obj.title}</p>
-              ) : (
-                <StyledSlider
-                  ref={slider}
-                  id={obj.id}
-                  defaultValue={0}
-                  value={progress}
-                  min={0}
-                  step={1}
-                  max={obj.duration}
-                  aria-labelledby="continuous-slider"
-                  onChange={(e) => onScrub(e.target.value)}
-                  onMouseUp={() => setScrub(false)}
-                  onTouchEnd={() => setScrub(false)}
-                />
+                <img className="gif__img" src={tapeImg} />
               )}
             </div>
-          )
-        })}
-        <div className="volume__slider">
-          {!mute ? (
-            <VolumeUpIcon
-              sx={{
-                color: "rgb(165, 165, 165)",
-                marginRight: "10px",
-                cursor: "pointer",
-              }}
-              onClick={() => setMute(mute ? false : true)}
-            />
           ) : (
-            <VolumeOffIcon
-              sx={{
-                color: "rgb(165, 165, 165)",
-                marginRight: "10px",
-                cursor: "pointer",
-              }}
-              onClick={() => setMute(mute ? false : true)}
-            />
+            <div className="gif-loading">
+              <span className="videoLoading-animation"></span>
+            </div>
           )}
-          <StyledSlider__2
-            defaultValue={0.5}
-            value={volume}
-            min={0}
-            step={0.01}
-            max={1}
-            aria-labelledby="continuous-slider"
-            onChange={(e) => setVolume(e.target.value)}
-          />
         </div>
-      </main>
 
-      <footer>
-        <p
-          onClick={() => {
-            setCopied(
-              copied == "copy-p__display"
-                ? "copy-p__display2"
-                : "copy-p__display"
-            )
-            navigator.clipboard.writeText("von.goose@protonmail.com")
-          }}
-        >
-          von.goose@protonmail.com
-        </p>
-        <p className={copied}>&nbsp;Copied!</p>
-      </footer>
+        <main>
+          {playObj.map((obj, i) => {
+            return (
+              <div key={i} className="play__container">
+                {!obj.play ? (
+                  <img id={obj.id} onClick={playAudio} className="play__img" src={playIcon} />
+                ) : (
+                  <img id={obj.id} onClick={stopAudio} className="play__img" src={pauseIcon} />
+                )}
+
+                <audio
+                  muted={mute}
+                  id={obj.id}
+                  ref={audioPlayer.current[obj.id]}
+                  type="audio/wav"
+                  src={obj.song}
+                  draggable
+                  loop
+                ></audio>
+
+                {!obj.play ? (
+                  <p className="play__container__p">{obj.title}</p>
+                ) : (
+                  <StyledSlider
+                    ref={slider}
+                    id={obj.id}
+                    defaultValue={0}
+                    value={progress}
+                    min={0}
+                    step={1}
+                    max={obj.duration}
+                    aria-labelledby="continuous-slider"
+                    onChange={e => onScrub(e.target.value)}
+                    onMouseUp={() => setScrub(false)}
+                    onTouchEnd={() => setScrub(false)}
+                  />
+                )}
+              </div>
+            );
+          })}
+          <div className="volume__slider">
+            {!mute ? (
+              <VolumeUpIcon
+                sx={{
+                  color: "rgb(165, 165, 165)",
+                  marginRight: "10px",
+                  cursor: "pointer",
+                }}
+                onClick={() => setMute(mute ? false : true)}
+              />
+            ) : (
+              <VolumeOffIcon
+                sx={{
+                  color: "rgb(165, 165, 165)",
+                  marginRight: "10px",
+                  cursor: "pointer",
+                }}
+                onClick={() => setMute(mute ? false : true)}
+              />
+            )}
+            <StyledSlider__2
+              defaultValue={0.5}
+              value={volume}
+              min={0}
+              step={0.01}
+              max={1}
+              aria-labelledby="continuous-slider"
+              onChange={e => setVolume(e.target.value)}
+            />
+          </div>
+        </main>
+        <div className="toVonGoose">
+          <a className="toVonGoose__a" href="https://www.von-goose.com">
+            &#60;------Go to von-goose.com
+          </a>
+        </div>
+        <footer>
+          <p
+            onClick={() => {
+              setCopied(copied == "copy-p__display" ? "copy-p__display2" : "copy-p__display");
+              navigator.clipboard.writeText("von.goose@protonmail.com");
+            }}
+          >
+            von.goose@protonmail.com
+          </p>
+          <p className={copied}>&nbsp;Copied!</p>
+        </footer>
+      </section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
