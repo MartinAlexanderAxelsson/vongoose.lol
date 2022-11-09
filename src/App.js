@@ -261,10 +261,10 @@ function App() {
           <a href="https://github.com/MartinAlexanderAxelsson">
             <img className="letter5" src={o2} />
           </a>
-          <a href="https://www.scriptwave.von-goose.com">
+          <a href="https://scriptwave.von-goose.com">
             <img className="letter6" src={o3} />
           </a>
-          <a href="https://www.scriptbeat.von-goose.com">
+          <a href="https://scriptbeat.von-goose.com">
             <img className="letter7" src={s} />
           </a>
           <a href="https://von-goose.com/static">
@@ -272,7 +272,7 @@ function App() {
           </a>
         </header>
         <div className="toVonGoose">
-          <a className="toVonGoose__a" href="https://www.von-goose.com">
+          <a className="toVonGoose__a" href="https://von-goose.com">
             &#60;------Go to von-goose.com
           </a>
         </div>
@@ -364,7 +364,7 @@ function App() {
           </div>
         </main>
         <div className="toVonGoose">
-          <a className="toVonGoose__a" href="https://www.von-goose.com">
+          <a className="toVonGoose__a" href="https://von-goose.com">
             &#60;------Go to von-goose.com
           </a>
         </div>
