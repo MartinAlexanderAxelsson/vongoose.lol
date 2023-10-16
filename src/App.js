@@ -261,10 +261,10 @@ function App() {
           <a href="https://github.com/MartinAlexanderAxelsson">
             <img className="letter5" src={o2} />
           </a>
-          <a href="https://scriptwave.von-goose.com">
+          <a href="https://scriptwave.vongoo.se">
             <img className="letter6" src={o3} />
           </a>
-          <a href="https://scriptbeat.von-goose.com">
+          <a href="https://scriptbeat.vongoo.se">
             <img className="letter7" src={s} />
           </a>
           <a href="https://von-goose.com/static">
@@ -272,19 +272,13 @@ function App() {
           </a>
         </header>
         <div className="toVonGoose">
-          <a className="toVonGoose__a" href="https://von-goose.com">
-            &#60;------Go to von-goose.com
+          <a className="toVonGoose__a" href="https://vongoo.se">
+            &#60;------Go to vongoo.se
           </a>
         </div>
 
         <div className="gif__container">
-          <div>
-            {isPlaying ? (
-              <img className="gif__img" src={scrub ? tapeGifFast : tapeGif} />
-            ) : (
-              <img className="gif__img" src={tapeImg} onLoad={() => setIsLoading(false)} />
-            )}
-          </div>
+          <div>{isPlaying ? <img className="gif__img" src={scrub ? tapeGifFast : tapeGif} /> : <img className="gif__img" src={tapeImg} onLoad={() => setIsLoading(false)} />}</div>
           {isLoading && (
             <div className="gif-loading">
               <span className="videoLoading-animation"></span>
@@ -296,38 +290,14 @@ function App() {
           {playObj.map((obj, i) => {
             return (
               <div key={i} className="play__container">
-                {!obj.play ? (
-                  <img id={obj.id} onClick={playAudio} className="play__img" src={playIcon} />
-                ) : (
-                  <img id={obj.id} onClick={stopAudio} className="play__img" src={pauseIcon} />
-                )}
+                {!obj.play ? <img id={obj.id} onClick={playAudio} className="play__img" src={playIcon} /> : <img id={obj.id} onClick={stopAudio} className="play__img" src={pauseIcon} />}
 
-                <audio
-                  muted={mute}
-                  id={obj.id}
-                  ref={audioPlayer.current[obj.id]}
-                  type="audio/wav"
-                  src={obj.song}
-                  draggable
-                  loop
-                ></audio>
+                <audio muted={mute} id={obj.id} ref={audioPlayer.current[obj.id]} type="audio/wav" src={obj.song} draggable loop></audio>
 
                 {!obj.play ? (
                   <p className="play__container__p">{obj.title}</p>
                 ) : (
-                  <StyledSlider
-                    ref={slider}
-                    id={obj.id}
-                    defaultValue={0}
-                    value={progress}
-                    min={0}
-                    step={1}
-                    max={obj.duration}
-                    aria-labelledby="continuous-slider"
-                    onChange={e => onScrub(e.target.value)}
-                    onMouseUp={() => setScrub(false)}
-                    onTouchEnd={() => setScrub(false)}
-                  />
+                  <StyledSlider ref={slider} id={obj.id} defaultValue={0} value={progress} min={0} step={1} max={obj.duration} aria-labelledby="continuous-slider" onChange={e => onScrub(e.target.value)} onMouseUp={() => setScrub(false)} onTouchEnd={() => setScrub(false)} />
                 )}
               </div>
             );
@@ -352,20 +322,12 @@ function App() {
                 onClick={() => setMute(mute ? false : true)}
               />
             )}
-            <StyledSlider__2
-              defaultValue={0.5}
-              value={volume}
-              min={0}
-              step={0.01}
-              max={1}
-              aria-labelledby="continuous-slider"
-              onChange={e => setVolume(e.target.value)}
-            />
+            <StyledSlider__2 defaultValue={0.5} value={volume} min={0} step={0.01} max={1} aria-labelledby="continuous-slider" onChange={e => setVolume(e.target.value)} />
           </div>
         </main>
         <div className="toVonGoose">
-          <a className="toVonGoose__a" href="https://von-goose.com">
-            &#60;------Go to von-goose.com
+          <a className="toVonGoose__a" href="https://vongoo.se">
+            &#60;------Go to vongoo.se
           </a>
         </div>
         <footer>
